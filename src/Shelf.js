@@ -49,17 +49,17 @@ const Shelf = (props) => {
         {shelfBooks.length > 0 &&
           <ul className={classes.list}>
             {shelfBooks.map(book => (
-                <Book 
+                <Book
                   key={book.id}
                   id={book.id}
                   title={book.title}
-                  authors={book.authors}
-                  description={`${book.description.substring(0,160)}...`}
+                  authors={book.authors ? book.authors : []}
+                  description={book.description ? `${book.description.substring(0,160)}...`: ''}
                   publishedDate={book.publishedDate}
                   pageCount={book.pageCount}
                   averageRating={book.averageRating}
                   ratingsCount={book.ratingsCount}
-                  image={book.imageLinks.thumbnail}
+                  image={book.imageLinks ? book.imageLinks.thumbnail : ''}
                 />
             ))}
           </ul>

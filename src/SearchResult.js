@@ -1,20 +1,44 @@
-import React from 'react';
-import Book from './Book';
+import React, { Component } from 'react';
+import Shelf from './Shelf';
+import EmptySearchResult from './EmptySearchResult';
 
-const SearchResult = (props) => {
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-  const { books } = props;
+const styles = theme => ({
+  list: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: 0
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+    justifyContent: 'center'
+  }
+});
 
-  console.log(books);
+class SearchResult extends Component {
 
-  return(
-    <div>
-      {books && books.map(book => (
-        // <Book key={book.id} title={book.title} />
-        <p key={book.id}>{book.title}</p>
-      ))}
-    </div>
-  )
+  componentWillUnmount() {
+    //clears searched books and searched query on parent element
+    this.props.clearQuery('');
+  }
+
+  render() {
+
+    const { books, query, classes } = this.props;
+
+    return(
+      <div>
+        {books && !books.length && 
+          <EmptySearchResult noBooksFound={books.hasOwnProperty('error')}/>
+        }
+        {books && !!books.length &&
+          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={books} />
+        }
+      </div>
+    )
+  }
 }
 
-export default SearchResult;
+export default withStyles(styles)(SearchResult);

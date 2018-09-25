@@ -22,8 +22,9 @@ const styles = theme => ({
       width: 'auto',
     },
   },
-  closeIcon: {
-  
+  link: {
+    color: theme.palette.primary["900"],
+    textDecoration: 'none'
   },
   inputRoot: {
     color: 'inherit',
@@ -77,19 +78,22 @@ class SearchBooks extends Component {
   }
 
   render(){
+
+    const { classes } = this.props;
+
     return (
-      <div className={this.props.classes.search}>
+      <div className={classes.search}>
         <Input
           placeholder="Search…"
           disableUnderline
           value={this.state.query}
           onChange={this.handleChange}
           classes={{
-            root: this.props.classes.inputRoot,
-            input: this.props.classes.inputInput,
+            root: classes.inputRoot,
+            input: classes.inputInput,
           }}
         />
-        <Link to="/" className={this.props.classes.closeIcon}>
+        <Link to="/" className={classes.link}>
           <IconButton color="inherit">
             <CloseIcon />
           </IconButton>

@@ -27,7 +27,8 @@ const styles = theme => ({
       padding: theme.spacing.unit * 1.5,
       paddingBottom: 0,
       overflow: 'visible',
-      position: 'relative'
+      position: 'relative',
+      width: '100%'
     },
     icon: {
       position: 'absolute',
@@ -56,7 +57,7 @@ const styles = theme => ({
       width: 120,
       height: 190,
       position: 'relative',
-      top: -25
+      backgroundColor: theme.palette.primary.main
     },
     footer: {
       textAlign: 'center',
@@ -68,9 +69,14 @@ const styles = theme => ({
     }
   });
 
+  const changeShelf = event => {
+    console.log(event.target.value);
+  }
+
 const Book = (props) => {
 
     const {id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, image, classes} = props;
+    //passar as shelves como props tb em array pra poder usar no select
 
     return (
         <li className={classes.root}>
@@ -80,6 +86,7 @@ const Book = (props) => {
               <div className={classes.select}>
                 <Select
                   value=""
+                  onChange={changeShelf}
                   inputProps={{
                     name: 'shelf',
                     id: 'shelf-select',

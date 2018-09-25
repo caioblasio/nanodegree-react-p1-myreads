@@ -32,7 +32,8 @@ class BooksApp extends Component {
 
   state = {
     shelfBooks: [],
-    searchBooks: []
+    searchBooks: [],
+    searchQuery: ''
   }
 
   componentDidMount() {
@@ -45,12 +46,21 @@ class BooksApp extends Component {
   }
 
   searchBooks = (query) => {
-    BooksAPI.search(query)
+    !query ? this.setState({searchBooks: [], searchQuery: query}) : this.fetchBooks(query)
+  }
+
+  fetchBooks = (searchQuery) => {
+    BooksAPI.search(searchQuery)
       .then(searchBooks => {
         this.setState({
-          searchBooks
+          searchBooks,
+          searchQuery
         })
       })
+  }
+
+  updateBook = (book, shelf) => {
+    //chamar API de update
   }
 
   render(){
@@ -71,6 +81,8 @@ class BooksApp extends Component {
             <Route path="/search" render={() => (
               <SearchResult 
                 books={this.state.searchBooks}
+                query={this.state.searchQuery}
+                clearQuery={this.searchBooks}
               />
             )} />
           </div>
