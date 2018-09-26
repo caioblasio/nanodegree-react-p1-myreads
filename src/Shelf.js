@@ -36,7 +36,7 @@ const styles = theme => ({
 
 const Shelf = (props) => {
 
-  const { shelfTitle, shelfBooks, classes } = props;
+  const { shelfTitle, shelfBooks, shelves, updateBookShelf, classes } = props;
   
   return (
     <div>
@@ -51,15 +51,9 @@ const Shelf = (props) => {
             {shelfBooks.map(book => (
                 <Book
                   key={book.id}
-                  id={book.id}
-                  title={book.title}
-                  authors={book.authors ? book.authors : []}
-                  description={book.description ? `${book.description.substring(0,160)}...`: ''}
-                  publishedDate={book.publishedDate}
-                  pageCount={book.pageCount}
-                  averageRating={book.averageRating}
-                  ratingsCount={book.ratingsCount}
-                  image={book.imageLinks ? book.imageLinks.thumbnail : ''}
+                  book={book}
+                  shelves={shelves}
+                  updateBookShelf={updateBookShelf}
                 />
             ))}
           </ul>

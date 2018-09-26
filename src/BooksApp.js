@@ -28,6 +28,21 @@ const styles = {
   }
 }
 
+const shelves = [
+  {
+    title: 'Currently Reading',
+    alias: 'currentlyReading'
+  },
+  {
+    title: 'Want To Read',
+    alias: 'wantToRead'
+  },
+  {
+    title: 'Read',
+    alias: 'read'
+  }
+]
+
 class BooksApp extends Component {
 
   state = {
@@ -60,7 +75,15 @@ class BooksApp extends Component {
   }
 
   updateBook = (book, shelf) => {
-    //chamar API de update
+    BooksAPI.update(book, shelf)
+      .then(() => {
+        book.shelf = shelf;
+        this.setState((currentState) => ({
+          shelfBooks: currentState.shelfBooks.map(currentBook => (
+            currentBook.id === book.id ? book : currentBook
+          ))
+        }))
+      })
   }
 
   render(){
@@ -76,13 +99,17 @@ class BooksApp extends Component {
             <Route exact path="/" render={() => (
               <Dashboard 
                 books={this.state.shelfBooks}
+                shelves={shelves}
+                updateBookShelf={this.updateBook}
               />
             )} />
             <Route path="/search" render={() => (
               <SearchResult 
                 books={this.state.searchBooks}
+                shelves={shelves}
                 query={this.state.searchQuery}
                 clearQuery={this.searchBooks}
+                updateBookShelf={this.updateBook}
               />
             )} />
           </div>

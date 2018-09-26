@@ -69,14 +69,31 @@ const styles = theme => ({
     }
   });
 
-  const changeShelf = event => {
-    console.log(event.target.value);
-  }
 
 const Book = (props) => {
 
-    const {id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, image, classes} = props;
-    //passar as shelves como props tb em array pra poder usar no select
+  /* 
+    key={book.id}
+    id={book.id}
+    title={book.title}
+    authors={book.authors ? book.authors : []}
+    description={book.description ? `${book.description.substring(0,160)}...`: ''}
+    publishedDate={book.publishedDate} //pass undefined
+    pageCount={book.pageCount}
+    averageRating={book.averageRating}
+    ratingsCount={book.ratingsCount}
+    image={book.imageLinks ? book.imageLinks.thumbnail : ''}
+  */
+
+    const { book, shelves, updateBookShelf, classes } = props;
+    const { id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
+
+    //arrumar a shelf pra ela vir como prop separa de book. Assim da pra passar ela vindo do componente BooksApp tanto pelo search como pela home
+
+    const changeShelf = event => {
+      console.log(event.target.value);
+      updateBookShelf(book, event.target.value);
+    }
 
     return (
         <li className={classes.root}>
@@ -85,19 +102,21 @@ const Book = (props) => {
               <MoreVertIcon />
               <div className={classes.select}>
                 <Select
-                  value=""
+                  value={shelf}
                   onChange={changeShelf}
                   inputProps={{
                     name: 'shelf',
                     id: 'shelf-select',
                   }}
                 >
-                  <MenuItem value="">
+                  <MenuItem disabled value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value="currentlyReading">Currently Reading</MenuItem>
-                  <MenuItem value="wantToRead">Want to Read</MenuItem>
-                  <MenuItem value="read">Read</MenuItem>
+                  {shelves.map(bookShelf => (
+                    <MenuItem key={bookShelf.alias} value={bookShelf.alias}>
+                      {bookShelf.title}
+                    </MenuItem>
+                  ))}
                 </Select>
               </div>
               
@@ -108,21 +127,21 @@ const Book = (props) => {
                 <div>
                   <CardMedia
                     className={classes.cover}
-                    image={image}
-                    title={title}
+                    image={imageLinks ? imageLinks.thumbnail : ''}
+                    title={title ? title : ''}
                   />
                 </div>
                 <div>
                   <CardContent className={classes.content}>
                     <Typography variant="subheading">
-                      {title}
+                      {title ? title : ''}
                     </Typography>
                     <Typography 
                       variant="body2"
                       color="textSecondary"
                       className={classes.author}
                     >
-                      {authors.map((author, index) => (
+                      {authors && authors.map((author, index) => (
                         index > 0 ? <span key={index}> {`e ${author}`}</span> : <span key={index}>{author}</span>
                       ))}
                     </Typography>
@@ -130,19 +149,19 @@ const Book = (props) => {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {`Published: ${publishedDate}`}
+                      {publishedDate ? `Published: ${publishedDate}` : ''}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                     >
-                      {`Pages: ${pageCount}`}
+                      {pageCount ? `Pages: ${pageCount}` : ''}
                     </Typography>
                     <Typography
                       variant="body1"
                       color="textSecondary"
                     >
-                      {description}
+                      {description ? `${description.substring(0,160)}...`: ''}
                     </Typography>
                   </CardContent>
                 </div>

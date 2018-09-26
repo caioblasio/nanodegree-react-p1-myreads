@@ -4,7 +4,7 @@ import Shelf from './Shelf';
 
 const Dashboard = (props) => {
 
-  const { books } = props;
+  const { books, shelves, updateBookShelf } = props;
 
   const getBooksShelves = (shelf) => (
     books.filter(book => (
@@ -14,9 +14,9 @@ const Dashboard = (props) => {
 
     return (
       <div>
-        <Shelf shelfTitle="Currently Reading" shelfBooks={getBooksShelves("currentlyReading")} />
-        <Shelf shelfTitle="Want to Read" shelfBooks={getBooksShelves("wantToRead")} />
-        <Shelf shelfTitle="Read" shelfBooks={getBooksShelves("read")} />
+        {shelves.map(shelf => (
+          <Shelf key={shelf.alias} shelfTitle={shelf.title} shelfBooks={getBooksShelves(shelf.alias)} shelves={shelves} updateBookShelf={updateBookShelf} />
+        ))}
       </div>
     )
 }

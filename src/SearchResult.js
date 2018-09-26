@@ -26,7 +26,7 @@ class SearchResult extends Component {
 
   render() {
 
-    const { books, query, classes } = this.props;
+    const { books, query, shelves, updateBookShelf, classes } = this.props;
 
     return(
       <div>
@@ -34,7 +34,7 @@ class SearchResult extends Component {
           <EmptySearchResult noBooksFound={books.hasOwnProperty('error')}/>
         }
         {books && !!books.length &&
-          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={books} />
+          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={books} shelves={shelves} updateBookShelf={updateBookShelf} />
         }
       </div>
     )
