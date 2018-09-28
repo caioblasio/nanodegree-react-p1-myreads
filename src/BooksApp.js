@@ -48,7 +48,8 @@ class BooksApp extends Component {
   state = {
     shelfBooks: [],
     searchBooks: [],
-    searchQuery: ''
+    searchQuery: '',
+    isSearching: false
   }
 
   componentDidMount() {
@@ -64,24 +65,33 @@ class BooksApp extends Component {
     !query ? this.setState({searchBooks: [], searchQuery: query}) : this.fetchBooks(query)
   }
 
-  //Tratar quando a busca da erro!! Antes era tratado direto no search result, na hora que definia se ia renderizar o EmptyResult ou uma Shelf com os resultados da busca
   fetchBooks = (searchQuery) => {
+    this.setState({ isSearching: true });
+
     BooksAPI.search(searchQuery)
       .then(searchBooks => {
-        let searchResult = [];
-        searchBooks.map(searchBook => {
-          const book = {...searchBook};
-          book.shelf = "none";
-          const filtered = this.state.shelfBooks.find(shelfBook => shelfBook.id === book.id)
-          return filtered ? searchResult.push(filtered) : searchResult.push(book)
-        });
+        let searchResult;
+        //se a resposta for array, faz o map
+        if(searchBooks.length){
+          searchResult = [];
+          searchBooks.map(searchBook => {
+            const book = {...searchBook};
+            book.shelf = "none";
+            const filtered = this.state.shelfBooks.find(shelfBook => shelfBook.id === book.id)
+            return filtered ? searchResult.push(filtered) : searchResult.push(book)
+          });
+        } else {
+          //se for erro, vai ser um objeto, só retorna o erro
+          searchResult = searchBooks;
+        }
         return searchResult;
       })
       .then(searchBooks => {
         this.setState({
           searchBooks,
-          searchQuery
-        })
+          searchQuery,
+          isSearching: false
+        });
       })
   }
 
@@ -144,6 +154,7 @@ class BooksApp extends Component {
                 query={this.state.searchQuery}
                 clearQuery={this.searchBooks}
                 updateBookShelf={this.updateBook}
+                isSearching={this.state.isSearching}
                 //shelfBooks={this.state.shelfBooks}
               />
             )} />

@@ -3,7 +3,7 @@ import Shelf from './Shelf';
 import EmptySearchResult from './EmptySearchResult';
 
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = theme => ({
   list: {
@@ -25,33 +25,23 @@ class SearchResult extends Component {
     this.props.clearQuery('');
   }
 
-//   helperSetBooksShelf = (resultBooks, shelfBooks, attributeName) => (
-//     resultBooks.map((resultBook) => {
-//         let filtered = shelfBooks.filter((shelfBook) => (
-//             resultBook.id === shelfBook.id
-//         ));
-
-//         return filtered.length > 0 ?  filtered[0] : resultBook
-        
-//         // if (filtered.length > 0) resultBook[attributeName] = filtered[0][attributeName];
-//         // return resultBook;
-//     })  
-//  )
-
   render() {
 
-    const { resultBooks, query, shelves, updateBookShelf, shelfBooks, classes } = this.props;
+    const { resultBooks, query, shelves, updateBookShelf, isSearching } = this.props;
 
     console.log('resultBooks', resultBooks);
-    console.log('shelfBooks', shelfBooks);
+    console.log('isSearching', isSearching);
+
 
     return(
       <div>
+        {isSearching && 
+          <LinearProgress/>
+        }
         {resultBooks && !resultBooks.length && 
           <EmptySearchResult noBooksFound={resultBooks.hasOwnProperty('error')}/>
         }
         {resultBooks && !!resultBooks.length &&
-          //this.helperSetBooksShelf(resultBooks, shelfBooks, "shelf")
           <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={resultBooks} shelves={shelves} updateBookShelf={updateBookShelf} />
         }
       </div>

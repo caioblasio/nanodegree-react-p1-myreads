@@ -72,21 +72,8 @@ const styles = theme => ({
 
 const Book = (props) => {
 
-  /* 
-    key={book.id}
-    id={book.id}
-    title={book.title}
-    authors={book.authors ? book.authors : []}
-    description={book.description ? `${book.description.substring(0,160)}...`: ''}
-    publishedDate={book.publishedDate} //pass undefined
-    pageCount={book.pageCount}
-    averageRating={book.averageRating}
-    ratingsCount={book.ratingsCount}
-    image={book.imageLinks ? book.imageLinks.thumbnail : ''}
-  */
-
     const { book, shelves, updateBookShelf, classes } = props;
-    const { id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
+    const { title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
 
     const changeShelf = event => {
       console.log(event.target.value);
@@ -125,7 +112,7 @@ const Book = (props) => {
                 <div>
                   <CardMedia
                     className={classes.cover}
-                    image={imageLinks ? imageLinks.thumbnail : ''}
+                    image={imageLinks ? imageLinks.thumbnail : '#'}
                     title={title ? title : ''}
                   />
                 </div>
