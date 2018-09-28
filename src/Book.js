@@ -88,8 +88,6 @@ const Book = (props) => {
     const { book, shelves, updateBookShelf, classes } = props;
     const { id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
 
-    //arrumar a shelf pra ela vir como prop separa de book. Assim da pra passar ela vindo do componente BooksApp tanto pelo search como pela home
-
     const changeShelf = event => {
       console.log(event.target.value);
       updateBookShelf(book, event.target.value);
@@ -109,7 +107,7 @@ const Book = (props) => {
                     id: 'shelf-select',
                   }}
                 >
-                  <MenuItem disabled value="">
+                  <MenuItem value="none">
                     <em>None</em>
                   </MenuItem>
                   {shelves.map(bookShelf => (

@@ -64,8 +64,19 @@ class BooksApp extends Component {
     !query ? this.setState({searchBooks: [], searchQuery: query}) : this.fetchBooks(query)
   }
 
+  //Tratar quando a busca da erro!! Antes era tratado direto no search result, na hora que definia se ia renderizar o EmptyResult ou uma Shelf com os resultados da busca
   fetchBooks = (searchQuery) => {
     BooksAPI.search(searchQuery)
+      .then(searchBooks => {
+        let searchResult = [];
+        searchBooks.map(searchBook => {
+          const book = {...searchBook};
+          book.shelf = "none";
+          const filtered = this.state.shelfBooks.find(shelfBook => shelfBook.id === book.id)
+          return filtered ? searchResult.push(filtered) : searchResult.push(book)
+        });
+        return searchResult;
+      })
       .then(searchBooks => {
         this.setState({
           searchBooks,
@@ -74,17 +85,40 @@ class BooksApp extends Component {
       })
   }
 
+
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf)
       .then(() => {
         book.shelf = shelf;
-        this.setState((currentState) => ({
-          shelfBooks: currentState.shelfBooks.map(currentBook => (
-            currentBook.id === book.id ? book : currentBook
-          ))
-        }))
+        this.setState((currentState) => {
+          //ve se o livro que foi atualizado ja esta em uma estante
+          const shelfBook = currentState.shelfBooks.find(shelfBook => (shelfBook.id === book.id));
+
+          if(shelfBook){
+            //se ja esta, troca a estante dele pela nova
+            shelfBook.shelf = book.shelf;
+            return {shelfBooks: currentState.shelfBooks}
+          } else {
+            //senao coloca o livro na lista de livros nas estantes
+            return {shelfBooks: currentState.shelfBooks.concat([book])}
+          }
+        
+        })
       })
   }
+
+
+  // updateBook = (book, shelf) => {
+  //   BooksAPI.update(book, shelf)
+  //     .then(() => {
+  //       book.shelf = shelf;
+  //       this.setState((currentState) => ({
+  //         shelfBooks: currentState.shelfBooks.map(currentBook => (
+  //           currentBook.id === book.id ? book : currentBook
+  //         ))
+  //       }))
+  //     })
+  // }
 
   render(){
 
@@ -105,11 +139,12 @@ class BooksApp extends Component {
             )} />
             <Route path="/search" render={() => (
               <SearchResult 
-                books={this.state.searchBooks}
+                resultBooks={this.state.searchBooks}
                 shelves={shelves}
                 query={this.state.searchQuery}
                 clearQuery={this.searchBooks}
                 updateBookShelf={this.updateBook}
+                //shelfBooks={this.state.shelfBooks}
               />
             )} />
           </div>

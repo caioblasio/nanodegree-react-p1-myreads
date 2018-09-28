@@ -37,6 +37,8 @@ const styles = theme => ({
 const Shelf = (props) => {
 
   const { shelfTitle, shelfBooks, shelves, updateBookShelf, classes } = props;
+
+  console.log(shelfBooks)
   
   return (
     <div>

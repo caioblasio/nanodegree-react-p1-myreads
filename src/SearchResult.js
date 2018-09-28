@@ -18,23 +18,41 @@ const styles = theme => ({
 });
 
 class SearchResult extends Component {
+  
 
   componentWillUnmount() {
     //clears searched books and searched query on parent element
     this.props.clearQuery('');
   }
 
+//   helperSetBooksShelf = (resultBooks, shelfBooks, attributeName) => (
+//     resultBooks.map((resultBook) => {
+//         let filtered = shelfBooks.filter((shelfBook) => (
+//             resultBook.id === shelfBook.id
+//         ));
+
+//         return filtered.length > 0 ?  filtered[0] : resultBook
+        
+//         // if (filtered.length > 0) resultBook[attributeName] = filtered[0][attributeName];
+//         // return resultBook;
+//     })  
+//  )
+
   render() {
 
-    const { books, query, shelves, updateBookShelf, classes } = this.props;
+    const { resultBooks, query, shelves, updateBookShelf, shelfBooks, classes } = this.props;
+
+    console.log('resultBooks', resultBooks);
+    console.log('shelfBooks', shelfBooks);
 
     return(
       <div>
-        {books && !books.length && 
-          <EmptySearchResult noBooksFound={books.hasOwnProperty('error')}/>
+        {resultBooks && !resultBooks.length && 
+          <EmptySearchResult noBooksFound={resultBooks.hasOwnProperty('error')}/>
         }
-        {books && !!books.length &&
-          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={books} shelves={shelves} updateBookShelf={updateBookShelf} />
+        {resultBooks && !!resultBooks.length &&
+          //this.helperSetBooksShelf(resultBooks, shelfBooks, "shelf")
+          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={resultBooks} shelves={shelves} updateBookShelf={updateBookShelf} />
         }
       </div>
     )
