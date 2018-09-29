@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Header from './Header';
 import SearchResult from './SearchResult';
+import BookDetail from './BookDetail';
+import CustomizedSnackbars from './CustomizedSnackbars';
 import * as BooksAPI from './utils/BooksAPI';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -49,7 +51,13 @@ class BooksApp extends Component {
     shelfBooks: [],
     searchBooks: [],
     searchQuery: '',
-    isSearching: false
+    isSearching: false,
+    snackbarInfo: {
+      show: false,
+      shelf: '',
+      variant: '',
+      action: ''
+    }
   }
 
   componentDidMount() {
@@ -103,32 +111,30 @@ class BooksApp extends Component {
         this.setState((currentState) => {
           //ve se o livro que foi atualizado ja esta em uma estante
           const shelfBook = currentState.shelfBooks.find(shelfBook => (shelfBook.id === book.id));
-
+          const snackbarInfo = {show: true, shelf, variant: shelf !== 'none' ? 'success' : 'warning', action: shelf !== 'none' ? 'moveToShelf' : 'removeFromShelf'}
           if(shelfBook){
             //se ja esta, troca a estante dele pela nova
             shelfBook.shelf = book.shelf;
-            return {shelfBooks: currentState.shelfBooks}
+            //verifica se o livro foi movido para uma estante. Se a estante é 'none' significa que ele foi removido de alguma estante e mostramos um snackbar de warning
+            return {shelfBooks: currentState.shelfBooks, snackbarInfo: { ...snackbarInfo}}
           } else {
             //senao coloca o livro na lista de livros nas estantes
-            return {shelfBooks: currentState.shelfBooks.concat([book])}
+            return {shelfBooks: currentState.shelfBooks.concat([book]), snackbarInfo: { ...snackbarInfo}}
           }
         
         })
       })
   }
 
+  handleSnackBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-  // updateBook = (book, shelf) => {
-  //   BooksAPI.update(book, shelf)
-  //     .then(() => {
-  //       book.shelf = shelf;
-  //       this.setState((currentState) => ({
-  //         shelfBooks: currentState.shelfBooks.map(currentBook => (
-  //           currentBook.id === book.id ? book : currentBook
-  //         ))
-  //       }))
-  //     })
-  // }
+    this.setState((currentState) => ({
+      snackbarInfo: {...currentState.snackbarInfo, show: false}
+    }));
+  };
 
   render(){
 
@@ -140,14 +146,15 @@ class BooksApp extends Component {
           <CssBaseline />
           <Header onSearch={this.searchBooks} />
           <div className={classes.root}>
-            <Route exact path="/" render={() => (
+            <Route exact path="/" render={(props) => (
               <Dashboard 
                 books={this.state.shelfBooks}
                 shelves={shelves}
                 updateBookShelf={this.updateBook}
+                {...props}
               />
             )} />
-            <Route path="/search" render={() => (
+            <Route path="/search" render={(props) => (
               <SearchResult 
                 resultBooks={this.state.searchBooks}
                 shelves={shelves}
@@ -155,10 +162,23 @@ class BooksApp extends Component {
                 clearQuery={this.searchBooks}
                 updateBookShelf={this.updateBook}
                 isSearching={this.state.isSearching}
-                //shelfBooks={this.state.shelfBooks}
+                {...props}
               />
             )} />
+            <Route path="/book/:id" render={(props) => (
+              <BookDetail {...props} />
+            )} />
           </div>
+          {this.state.snackbarInfo.show && <CustomizedSnackbars 
+            open={this.state.snackbarInfo.show} 
+            handleClose={this.handleSnackBarClose} 
+            variant={this.state.snackbarInfo.variant}
+            message={`
+              Book
+              ${this.state.snackbarInfo.action === 'moveToShelf' ? 
+              `moved to shelf ${shelves.find(shelf => (shelf.alias === this.state.snackbarInfo.shelf)).title}` : 'removed from shelf'}`
+            }
+          />}
         </React.Fragment>
       </MuiThemeProvider>
     )

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -42,7 +43,11 @@ const styles = theme => ({
     },
     main: {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'row'
+    },
+    link: {
+      color: theme.palette.primary["900"],
+      textDecoration: 'none'
     },
     content: {
       display: 'flex',
@@ -72,8 +77,9 @@ const styles = theme => ({
 
 const Book = (props) => {
 
+    console.log(props)
     const { book, shelves, updateBookShelf, classes } = props;
-    const { title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
+    const {id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
 
     const changeShelf = event => {
       console.log(event.target.value);
@@ -106,7 +112,7 @@ const Book = (props) => {
               </div>
               
             </IconButton>
-          
+            <Link to={{pathname: `/book/${id}`, state: {fromDashboard: true}}} className={classes.link}>
             <CardActionArea>
               <div className={classes.main}>
                 <div>
@@ -152,6 +158,7 @@ const Book = (props) => {
                 </div>
               </div>
             </CardActionArea>
+            </Link>
             <div className={classes.footer}>
               {averageRating && <StarRatingComponent 
                 name="rate1" 
