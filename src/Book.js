@@ -77,8 +77,7 @@ const styles = theme => ({
 
 const Book = (props) => {
 
-    console.log(props)
-    const { book, shelves, updateBookShelf, classes } = props;
+    const { book, shelves, updateBookShelf, classes, location } = props;
     const {id, title, authors, description, publishedDate, pageCount, averageRating, ratingsCount, imageLinks, shelf } = book;
 
     const changeShelf = event => {
@@ -112,7 +111,7 @@ const Book = (props) => {
               </div>
               
             </IconButton>
-            <Link to={{pathname: `/book/${id}`, state: {fromDashboard: true}}} className={classes.link}>
+            <Link to={{pathname: `/book/${id}`, state: {fromDashboard: location.pathname === '/' ? true : false, book }}} className={classes.link}>
             <CardActionArea>
               <div className={classes.main}>
                 <div>

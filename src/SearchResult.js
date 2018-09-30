@@ -20,14 +20,16 @@ const styles = theme => ({
 class SearchResult extends Component {
   
 
-  componentWillUnmount() {
+  componentWillMount() {
     //clears searched books and searched query on parent element
-    this.props.clearQuery('');
+    if(!(this.props.location.state && this.props.location.state.fromBookDetail)){
+      this.props.clearQuery('');
+    }
   }
 
   render() {
 
-    const { resultBooks, query, shelves, updateBookShelf, isSearching } = this.props;
+    const { resultBooks, query, shelves, updateBookShelf, isSearching, location } = this.props;
 
     console.log('resultBooks', resultBooks);
     console.log('isSearching', isSearching);
@@ -42,7 +44,7 @@ class SearchResult extends Component {
           <EmptySearchResult noBooksFound={resultBooks.hasOwnProperty('error')}/>
         }
         {resultBooks && !!resultBooks.length &&
-          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={resultBooks} shelves={shelves} updateBookShelf={updateBookShelf} />
+          <Shelf shelfTitle={`Search Results for: ${query}`} shelfBooks={resultBooks} shelves={shelves} updateBookShelf={updateBookShelf} location={location} />
         }
       </div>
     )

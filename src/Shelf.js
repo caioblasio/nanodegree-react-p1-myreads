@@ -36,7 +36,7 @@ const styles = theme => ({
 
 const Shelf = (props) => {
 
-  const { shelfTitle, shelfBooks, shelves, updateBookShelf, classes } = props;
+  const { shelfTitle, shelfBooks, shelves, updateBookShelf, classes, location } = props;
 
   console.log(shelfBooks)
   
@@ -56,6 +56,7 @@ const Shelf = (props) => {
                   book={book}
                   shelves={shelves}
                   updateBookShelf={updateBookShelf}
+                  location={location}
                 />
             ))}
           </ul>
