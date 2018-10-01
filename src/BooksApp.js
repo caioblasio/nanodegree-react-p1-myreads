@@ -139,7 +139,7 @@ class BooksApp extends Component {
   render(){
 
     const { classes } = this.props;
-    console.log(theme);
+    //console.log(theme);
 
     return (
       <MuiThemeProvider theme={theme}>

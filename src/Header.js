@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => {
-  console.log(theme)
+  //console.log(theme)
   return {
     root: {
       flexGrow: 1,

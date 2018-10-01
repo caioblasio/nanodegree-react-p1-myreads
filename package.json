@@ -10,12 +10,25 @@
     "react-star-rating-component": "^1.4.1"
   },
   "devDependencies": {
-    "react-scripts": "1.1.4"
+    "babel-jest": "^23.6.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "jest": "^23.6.0",
+    "react-scripts": "1.1.4",
+    "react-test-renderer": "^16.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/testsetup.js"
+    ]
   }
 }
