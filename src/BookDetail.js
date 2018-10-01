@@ -25,10 +25,18 @@ const styles = theme => ({
   },
   main: {
     marginTop: theme.spacing.unit * 4,
-    padding: theme.spacing.unit * 4
+    padding: 0,
+    paddingTop: theme.spacing.unit,
+    
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing.unit * 4
+    },
   },
   flex: {
-    display: 'flex',
+    display: 'block',
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex'
+    }
   },
   media: {
     boxSizing: 'border-box',
@@ -37,11 +45,16 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     flexBasis: '33.33333%',
-    maxWidth: '33.33333%'
+    maxWidth: '100%',
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '33.33333%'
+    }
   },
   cover: {
-
-    height: '500px',
+    height: '400px',
+    [theme.breakpoints.up('sm')]: {
+      height: '500px'
+    },
     backgroundSize: 'cover',
     backgroundColor: theme.palette.primary.main
   },
