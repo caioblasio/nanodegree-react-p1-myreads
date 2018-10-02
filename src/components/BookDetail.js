@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
-import * as BooksAPI from './utils/BooksAPI';
+import * as BooksAPI from '../utils/BooksAPI';
 
 const styles = theme => ({
   root: {
@@ -175,7 +175,7 @@ class BookDetail extends Component {
                       rating unavailable
                     </Typography>}
                   </div>
-                  <a target="_blank" className={classes.link} href={this.state.book.previewLink} >
+                  <a target="_blank" className={classes.link} href={this.state.book.previewLink ? this.state.book.previewLink : '#'} >
                     <Button variant="outlined" color="secondary">
                       Preview
                     </Button>

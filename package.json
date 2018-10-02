@@ -18,17 +18,23 @@
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "jest": "^23.6.0",
+    "jest-fetch-mock": "^1.6.6",
     "react-test-renderer": "^16.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "jest": {
     "setupFiles": [
-      "./test/testsetup.js"
-    ]
+      "./src/testsetup.js"
+    ],
+    "collectCoverageFrom": [
+			"src/**/*.{js,jsx}",
+			"!src/index.js"
+		]
   }
 }

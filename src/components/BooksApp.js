@@ -5,7 +5,8 @@ import Header from './Header';
 import SearchResult from './SearchResult';
 import BookDetail from './BookDetail';
 import CustomizedSnackbars from './CustomizedSnackbars';
-import * as BooksAPI from './utils/BooksAPI';
+import * as BooksAPI from '../utils/BooksAPI';
+import { shelvesData } from '../common/commonData';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
@@ -30,20 +31,7 @@ const styles = {
   }
 }
 
-const shelves = [
-  {
-    title: 'Currently Reading',
-    alias: 'currentlyReading'
-  },
-  {
-    title: 'Want To Read',
-    alias: 'wantToRead'
-  },
-  {
-    title: 'Read',
-    alias: 'read'
-  }
-]
+
 
 class BooksApp extends Component {
 
@@ -139,7 +127,7 @@ class BooksApp extends Component {
   render(){
 
     const { classes } = this.props;
-    console.log(theme);
+    //console.log(theme);
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -150,7 +138,7 @@ class BooksApp extends Component {
             <Route exact path="/" render={(props) => (
               <Dashboard 
                 books={this.state.shelfBooks}
-                shelves={shelves}
+                shelves={shelvesData}
                 updateBookShelf={this.updateBook}
                 {...props}
               />
@@ -158,7 +146,7 @@ class BooksApp extends Component {
             <Route path="/search" render={(props) => (
               <SearchResult 
                 resultBooks={this.state.searchBooks}
-                shelves={shelves}
+                shelves={shelvesData}
                 query={this.state.searchQuery}
                 clearQuery={this.searchBooks}
                 updateBookShelf={this.updateBook}
@@ -177,7 +165,7 @@ class BooksApp extends Component {
             message={`
               Book
               ${this.state.snackbarInfo.action === 'moveToShelf' ? 
-              `moved to shelf ${shelves.find(shelf => (shelf.alias === this.state.snackbarInfo.shelf)).title}` : 'removed from shelf'}`
+              `moved to shelf ${shelvesData.find(shelf => (shelf.alias === this.state.snackbarInfo.shelf)).title}` : 'removed from shelf'}`
             }
           />}
         </React.Fragment>

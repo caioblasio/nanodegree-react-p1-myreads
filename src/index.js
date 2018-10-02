@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import BooksApp from './BooksApp'
+import BooksApp from './components/BooksApp'
 import './index.css'
-
-//import BooksApp from './utils/ExampleApp';
 
 import { BrowserRouter } from 'react-router-dom';
 
