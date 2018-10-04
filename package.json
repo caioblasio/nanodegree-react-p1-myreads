@@ -24,14 +24,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "react-scripts test --env=jsdom",
     "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "jest": {
-    "setupFiles": [
-      "./src/testsetup.js"
-    ],
     "collectCoverageFrom": [
 			"src/**/*.{js,jsx}",
 			"!src/index.js"

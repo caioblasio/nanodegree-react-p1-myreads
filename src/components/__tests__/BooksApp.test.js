@@ -4,6 +4,7 @@ import BooksApp from '../BooksApp';
 
 import Header from '../Header';
 import Dashboard from '../Dashboard';
+import CustomizedSnackbars from '../CustomizedSnackbars';
 
 import { MemoryRouter } from 'react-router-dom';
 
@@ -11,15 +12,14 @@ import { testBooks, jsonHeaders } from '../../common/testData';
 import { shelvesData } from '../../common/commonData';
 import SearchResult from '../SearchResult';
 
+
 describe.only('BooksApp', () => {
 
-  let wrapperRoot, wrapperSearch;
-
+  let mountedRoot, mountedSearch
 	beforeAll(() => {
 		fetch.mockResponse(JSON.stringify(testBooks), { jsonHeaders });
-    wrapperRoot = mount(<MemoryRouter><BooksApp /></MemoryRouter>);
-    wrapperSearch = mount(<MemoryRouter initialEntries={[ '/search' ]}><BooksApp /></MemoryRouter>);
-
+    mountedRoot = mount(<MemoryRouter><BooksApp /></MemoryRouter>);
+    mountedSearch = mount(<MemoryRouter initialEntries={[ '/search' ]}><BooksApp /></MemoryRouter>);
 	});
 
   it('renders without crashing', () => {
@@ -36,15 +36,15 @@ describe.only('BooksApp', () => {
   });
 
   it('renders a Header', () => {
-		expect(wrapperRoot.find(Header).length).toBe(1);
+		expect(mountedRoot.find(Header).length).toBe(1);
   });
   
   it('renders a Dashboard', () => {
-		expect(wrapperRoot.find(Dashboard).length).toBe(1);
+		expect(mountedRoot.find(Dashboard).length).toBe(1);
   });
   
   it('renders a Search Result', () => {
-		expect(wrapperSearch.find(SearchResult).length).toBe(1);
-	});
+		expect(mountedSearch.find(SearchResult).length).toBe(1);
+  });
 
 })
