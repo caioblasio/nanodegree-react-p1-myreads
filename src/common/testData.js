@@ -15,6 +15,7 @@ const testBooks = {
 			subtitle: 'Another Subtitle #2',
 			description:
 				'Suspendisse facilisis varius sem, ut auctor sem pulvinar sed.',
+			categories: ['TEST', 'TEST2'],
 			authors: ['Guy Three', 'Guy Four'],
 			imageLinks: { thumbnail: 'http://pic2.jpg' },
 			id: 'sJf1vQAACAAJ',

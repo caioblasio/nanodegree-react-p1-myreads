@@ -13,9 +13,6 @@ const localStorageMock = {
 };
 
 global.localStorage = localStorageMock;
-global.fetch = require('jest-fetch-mock');
-
-
 global.shallow = shallow;
 global.wrapper = wrapper;
 global.render = render;
