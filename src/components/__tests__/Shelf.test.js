@@ -16,9 +16,9 @@ describe('Book', () => {
 	beforeAll(() => {
     shelfTitle = 'Test Shelf',
     shelfBooks = testBooks.books,
-    shelves = shelvesData
-    updateBookShelf = jest.fn()
-    location = {}
+    shelves = shelvesData,
+    updateBookShelf = jest.fn(),
+    location = {},
     shallow = createShallow({untilSelector: Shelf});
 
 	});
@@ -46,7 +46,7 @@ describe('Book', () => {
         <Shelf
           shelfTitle={shelfTitle}
           shelfBooks={[]}
-          shelvesData={shelvesData}
+          shelves={shelves}
           updateBookShelf={updateBookShelf}
           location={location}
         />

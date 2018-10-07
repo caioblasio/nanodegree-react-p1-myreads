@@ -1,6 +1,6 @@
 import React from 'react';
 import Book from './Book';
-
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -34,11 +34,7 @@ const styles = theme => ({
   }
 });
 
-const Shelf = (props) => {
-
-  const { shelfTitle, shelfBooks, shelves, updateBookShelf, classes, location } = props;
-
-  console.log(shelfBooks)
+const Shelf = ({ shelfTitle, shelfBooks, shelves, updateBookShelf, classes, location }) => {
   
   return (
     <div>
@@ -69,6 +65,15 @@ const Shelf = (props) => {
       </Paper>
     </div>
   )
+}
+
+Shelf.propTypes = {
+  shelfTitle: PropTypes.string.isRequired,
+  shelfBooks: PropTypes.array.isRequired,
+  shelves: PropTypes.array.isRequired,
+  updateBookShelf: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Shelf);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import SearchBooks from './SearchBooks';
-
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => {
-  //console.log(theme)
+
   return {
     root: {
       flexGrow: 1,
@@ -30,9 +30,7 @@ const styles = theme => {
   }
 };
 
-const Header = (props) => {
-
-  const { onSearch, classes } = props;
+const Header = ({ onSearch, classes }) => {
 
   return(
     <div className={classes.root}>
@@ -57,6 +55,11 @@ const Header = (props) => {
       </AppBar>
     </div>
   )
+}
+
+Header.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Header);

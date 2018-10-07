@@ -3,7 +3,7 @@ import React from 'react';
 import Book from '../Book';
 import { MemoryRouter } from 'react-router-dom';
 import { shelvesData }  from '../../common/commonData';
-import { testBooks } from '../../common/testData';
+import { testBooks, jsonHeaders } from '../../common/testData';
 import { createShallow } from '@material-ui/core/test-utils';
 import CardMedia from '@material-ui/core/CardMedia';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -55,38 +55,19 @@ describe('Book', () => {
 	});
 
 	it("should show the book's description", () => {
-		expect(mounted.text().includes(book.description.substring(0, 160))).toBe(
-			true
-		);
+		expect(mounted.text().includes(book.description.substring(0, 160))).toBe(true);
   });
   
   it('can change the shelf', () => {
-   
-    // mounted.find(Menu).props({open: true})
-    // mounted.update()
-    // console.log(mounted.find(Menu).props())
-    // console.log(mounted.update().debug())
-    // mounted.find('input#shelf-select').simulate('change', { target: { value: "read" }})
-    // expect(updateBookShelf.mock.calls.length).toBe(1);
-    // expect(mounted.state('shelf')).toBe(book.shelf);
-    //mounted.instance().handleChangeShelf({}, 0, 'currentlyReading');
-    // expect(mounted.state('shelf')).toBe('currentlyReading');
-  });
 
-  it('should render 3 books', () => {
-    const mounted = mount(
-      <MemoryRouter>
-        <Book
-          book={book}
-          shelves={shelves}
-          updateBookShelf={updateBookShelf}
-          location={location}
-        />
-      </MemoryRouter>
-    )
+    const component = wrapper.dive();
+
+    const mockBookData = { shelfBooks: {...testBooks.books[0], shelf: 'read'} };
+		fetch.mockResponse(JSON.stringify(mockBookData), { jsonHeaders });
 
 
-
+    component.instance().changeShelf({target: {value: 'read'}});
+    expect(component.state().shelf).toEqual('read');
   });
  
 })

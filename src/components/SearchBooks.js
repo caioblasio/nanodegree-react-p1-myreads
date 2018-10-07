@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Input from '@material-ui/core/Input';
@@ -55,6 +56,7 @@ class SearchBooks extends Component {
     this.handleChange = this.handleChange.bind(this);
  }
 
+  //debounce on input change
   handleChange = (event) => {
 
     const self = this;
@@ -101,6 +103,11 @@ class SearchBooks extends Component {
       </div>
     )
   }
+}
+
+SearchBooks.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(SearchBooks);

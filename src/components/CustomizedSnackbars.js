@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
@@ -47,8 +46,8 @@ const styles1 = theme => ({
   },
 });
 
-function MySnackbarContent(props) {
-  const { classes, className, message, onClose, variant, ...other } = props;
+function MySnackbarContent({ classes, className, message, onClose, variant, ...other }) {
+
   const Icon = variantIcon[variant];
 
   return (
@@ -87,16 +86,10 @@ MySnackbarContent.propTypes = {
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
-const styles2 = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
-});
-
 class CustomizedSnackbars extends React.Component {
 
   render() {
-    const { classes, open, handleClose, message, variant } = this.props;
+    const { open, handleClose, message, variant } = this.props;
 
     return (
       <div>
@@ -120,8 +113,4 @@ class CustomizedSnackbars extends React.Component {
   }
 }
 
-CustomizedSnackbars.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles2)(CustomizedSnackbars);
+export default CustomizedSnackbars;

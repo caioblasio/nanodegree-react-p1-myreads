@@ -12,14 +12,14 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 describe('<SearchResult/>', () => {
 
-  let resultBooks, emptyResult, shelves, query, clearQuery, updateBookShelf, location;
+  let resultBooks, emptyResult, shelves, query, clearResults, updateBookShelf, location;
 
 	beforeAll(() => {
     resultBooks= testBooks.books,
     emptyResult = [],
     shelves= shelvesData,
     query = '',
-    clearQuery= jest.fn(),
+    clearResults= jest.fn(),
     updateBookShelf= jest.fn(),
     location = {}
 
@@ -31,7 +31,7 @@ describe('<SearchResult/>', () => {
         resultBooks={emptyResult}
         shelves={shelvesData}
         query = ''
-        clearQuery={clearQuery}
+        clearResults={clearResults}
         updateBookShelf={updateBookShelf}
         location={location}
       />
@@ -48,7 +48,7 @@ describe('<SearchResult/>', () => {
         resultBooks={resultBooks}
         shelves={shelvesData}
         query = 'test'
-        clearQuery={clearQuery}
+        clearResults={clearResults}
         updateBookShelf={updateBookShelf}
         location={location}
       />
@@ -65,7 +65,7 @@ describe('<SearchResult/>', () => {
         resultBooks={emptyResult}
         shelves={shelvesData}
         query = ''
-        clearQuery={clearQuery}
+        clearResults={clearResults}
         updateBookShelf={updateBookShelf}
         location={location}
         isSearching={true}
@@ -76,9 +76,9 @@ describe('<SearchResult/>', () => {
     expect(mounted.find(LinearProgress)).toHaveLength(1);
   })
 
-  it('should call clearQuery', () => {
+  it('should call clearResults', () => {
 
-    let clearQuery = jest.fn();
+    let clearResults = jest.fn();
 
     const mounted = mount(
       <MemoryRouter>
@@ -86,19 +86,19 @@ describe('<SearchResult/>', () => {
         resultBooks={emptyResult}
         shelves={shelvesData}
         query = 'test'
-        clearQuery={clearQuery}
+        clearResults={clearResults}
         updateBookShelf={updateBookShelf}
         location={location}
       />
       </MemoryRouter>
     )
 
-    expect(clearQuery.mock.calls.length).toBe(1);
+    expect(clearResults.mock.calls.length).toBe(1);
   });
 
-  it('should not call clearQuery', () => {
+  it('should not call clearResults', () => {
 
-    let clearQuery = jest.fn();
+    let clearResults = jest.fn();
 
     const mounted = mount(
       <MemoryRouter>
@@ -106,7 +106,7 @@ describe('<SearchResult/>', () => {
         resultBooks={emptyResult}
         shelves={shelvesData}
         query = 'test'
-        clearQuery={clearQuery}
+        clearResults={clearResults}
         updateBookShelf={updateBookShelf}
         location={{
           state: {
@@ -117,7 +117,7 @@ describe('<SearchResult/>', () => {
       </MemoryRouter>
     )
 
-    expect(clearQuery.mock.calls.length).toBe(0);
+    expect(clearResults.mock.calls.length).toBe(0);
   });
  
 })

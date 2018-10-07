@@ -31,8 +31,6 @@ const styles = {
   }
 }
 
-
-
 class BooksApp extends Component {
 
   state = {
@@ -63,21 +61,20 @@ class BooksApp extends Component {
 
   fetchBooks = (searchQuery) => {
     this.setState({ isSearching: true });
-
     BooksAPI.search(searchQuery)
       .then(searchBooks => {
         let searchResult;
-        //se a resposta for array, faz o map
+        // if searchBooks is an array than map it
         if(searchBooks.length){
           searchResult = [];
           searchBooks.map(searchBook => {
             const book = {...searchBook};
-            book.shelf = "none";
-            const filtered = this.state.shelfBooks.find(shelfBook => shelfBook.id === book.id)
-            return filtered ? searchResult.push(filtered) : searchResult.push(book)
+            book.shelf = "none"; //add shelf none to all searched books
+            const filtered = this.state.shelfBooks.find(shelfBook => shelfBook.id === book.id) //check if they are already in a shelf
+            return filtered ? searchResult.push(filtered) : searchResult.push(book) //correctly push book objects with their shelf
           });
         } else {
-          //se for erro, vai ser um objeto, só retorna o erro
+          //if searchBooks is an object than just return that object as a result
           searchResult = searchBooks;
         }
         return searchResult;
@@ -97,16 +94,16 @@ class BooksApp extends Component {
       .then(() => {
         book.shelf = shelf;
         this.setState((currentState) => {
-          //ve se o livro que foi atualizado ja esta em uma estante
+          //check if updated book is already in a shelf
           const shelfBook = currentState.shelfBooks.find(shelfBook => (shelfBook.id === book.id));
+          //set snackbarInfo according to operation perfomed, shelf change or shelf removal
           const snackbarInfo = {show: true, shelf, variant: shelf !== 'none' ? 'success' : 'warning', action: shelf !== 'none' ? 'moveToShelf' : 'removeFromShelf'}
           if(shelfBook){
-            //se ja esta, troca a estante dele pela nova
+            //if book is already in a shelf, change its shelf
             shelfBook.shelf = book.shelf;
-            //verifica se o livro foi movido para uma estante. Se a estante é 'none' significa que ele foi removido de alguma estante e mostramos um snackbar de warning
             return {shelfBooks: currentState.shelfBooks, snackbarInfo: { ...snackbarInfo}}
           } else {
-            //senao coloca o livro na lista de livros nas estantes
+            //if book was not in a shelf, put it in the shelf
             return {shelfBooks: currentState.shelfBooks.concat([book]), snackbarInfo: { ...snackbarInfo}}
           }
         
@@ -114,7 +111,7 @@ class BooksApp extends Component {
       })
   }
 
-  handleSnackBarClose = (event, reason) => {
+  handleSnackBarClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -125,10 +122,7 @@ class BooksApp extends Component {
   };
 
   render(){
-
     const { classes } = this.props;
-    //console.log(theme);
-
     return (
       <MuiThemeProvider theme={theme}>
         <React.Fragment>
@@ -148,7 +142,7 @@ class BooksApp extends Component {
                 resultBooks={this.state.searchBooks}
                 shelves={shelvesData}
                 query={this.state.searchQuery}
-                clearQuery={this.searchBooks}
+                clearResults={this.searchBooks}
                 updateBookShelf={this.updateBook}
                 isSearching={this.state.isSearching}
                 {...props}

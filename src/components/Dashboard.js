@@ -1,10 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Shelf from './Shelf';
 
 
-const Dashboard = (props) => {
-
-  const { books, shelves, updateBookShelf, location } = props;
+const Dashboard = ({ books, shelves, updateBookShelf, location }) => {
 
   const getBooksShelves = (shelf) => (
     books.filter(book => (
@@ -12,13 +11,20 @@ const Dashboard = (props) => {
     ))
   );
 
-    return (
-      <div>
-        {shelves.map(shelf => (
-          <Shelf key={shelf.alias} shelfTitle={shelf.title} shelfBooks={getBooksShelves(shelf.alias)} shelves={shelves} updateBookShelf={updateBookShelf} location={location} />
-        ))}
-      </div>
-    )
+  return (
+    <div>
+      {shelves.map(shelf => (
+        <Shelf key={shelf.alias} shelfTitle={shelf.title} shelfBooks={getBooksShelves(shelf.alias)} shelves={shelves} updateBookShelf={updateBookShelf} location={location} />
+      ))}
+    </div>
+  )
+}
+
+Dashboard.propTypes = {
+  books:PropTypes.array.isRequired,
+  shelves:PropTypes.array.isRequired,
+  updateBookShelf: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default Dashboard;

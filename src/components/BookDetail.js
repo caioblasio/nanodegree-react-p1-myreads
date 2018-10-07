@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropType from 'prop-types';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -74,7 +75,6 @@ const styles = theme => ({
 
 const helperGetBigImage = (uri, key, value) => {
   var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
   if (uri.match(re)) {
     return uri.replace(re, '$1' + key + "=" + value + '$2');
   }
@@ -84,6 +84,11 @@ const helperGetBigImage = (uri, key, value) => {
 }
 
 class BookDetail extends Component {
+
+  static propType = {
+    location: PropType.object,
+    classes: PropType.object.isRequired
+  }
 
   state = {
     book: {}

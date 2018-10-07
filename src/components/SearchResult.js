@@ -1,40 +1,34 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Shelf from './Shelf';
 import EmptySearchResult from './EmptySearchResult';
-
-import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-const styles = theme => ({
-  list: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: 0
-  },
-  progress: {
-    margin: theme.spacing.unit * 2,
-    justifyContent: 'center'
-  }
-});
-
 class SearchResult extends Component {
-  
 
+  static propTypes = {
+    resultBooks: PropTypes.array.isRequired,
+    query: PropTypes.string,
+    clearResults: PropTypes.func.isRequired,
+    shelves: PropTypes.array.isRequired,
+    updateBookShelf: PropTypes.func.isRequired,
+    isSearching: PropTypes.bool,
+    location: PropTypes.object.isRequired,
+  }
+  
+  /* 
+    Clear searched books and searched query on parent element if user has not come from a book detail page
+    If user has come from a book detail page, we do not want to clear their search results
+  */
   componentWillMount() {
-    //clears searched books and searched query on parent element
-    if(!(this.props.location.state && this.props.location.state.fromBookDetail)){
-      this.props.clearQuery('');
+    const { location, clearResults } = this.props; 
+    if(!(location.state && location.state.fromBookDetail)){
+      clearResults('');
     }
   }
 
   render() {
-
     const { resultBooks, query, shelves, updateBookShelf, isSearching, location } = this.props;
-
-    console.log('resultBooks', resultBooks);
-    console.log('isSearching', isSearching);
-
-
     return(
       <div>
         {isSearching && 
@@ -51,4 +45,4 @@ class SearchResult extends Component {
   }
 }
 
-export default withStyles(styles)(SearchResult);
+export default SearchResult;

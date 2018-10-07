@@ -24,8 +24,8 @@ const testBooks = {
 		{
 			title: '3: The Threequel',
 			subtitle: 'The 3rd and Final Subtitle',
-			description:
-				'Maecenas justo nunc, lobortis et volutpat vel, tempor quis tellus.',
+			pageCount: 100,
+			averageRating: 3,
 			authors: ['Writer Five', 'Writer Six'],
 			imageLinks: { thumbnail: 'http://bookCover.png' },
 			id: 'bKs2xWEECBAL',
