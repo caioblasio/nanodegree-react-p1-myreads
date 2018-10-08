@@ -1,5 +1,6 @@
 # MyReads Project
 
+![MyReads home page](https://raw.githubusercontent.com/caioblasio/nanodegree-react-p1-myreads/master/myreads.png)
 A Book Lending App created as part of the Udacity React Developer Nanodegree. Written in React and styled with Material-UI.
 The app uses React & react-router to build a SPA front-end for a RESTful books API. It can search for books, add books to shelves and move them between shelves. [Click here to view the live demo](https://myreads-caioblasio.herokuapp.com)
 
