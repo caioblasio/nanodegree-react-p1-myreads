@@ -41,29 +41,37 @@ const styles = theme => ({
         width: 400,
       },
     },
-  },
+  }
 });
 
+/**
+* @description Search Books Component
+* @param {function(string)} onSearch
+* @param {Object} classes
+*/
 class SearchBooks extends Component {
 
   state = {
     query: '',
     typingTimeout: 0
-  }
+  };
 
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
  }
 
-  //debounce on input change
+  /**
+  * @description Handles change at input field with debounce
+  * @param {object} event
+  */
   handleChange = (event) => {
 
     const self = this;
 
     if (self.state.typingTimeout) {
       clearTimeout(self.state.typingTimeout);
-   }
+    }
 
     this.setState({
       query: event.target.value,
@@ -71,13 +79,16 @@ class SearchBooks extends Component {
         self.searchForBooks(self.state.name);
       }, 500)
     });
-  }
+  };
 
+  /**
+  * @description Calls onSearch function with the query input by the user
+  */
   searchForBooks = () => {
 
     const { onSearch } = this.props;
     onSearch(this.state.query);
-  }
+  };
 
   render(){
 
@@ -108,6 +119,6 @@ class SearchBooks extends Component {
 SearchBooks.propTypes = {
   onSearch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(SearchBooks);

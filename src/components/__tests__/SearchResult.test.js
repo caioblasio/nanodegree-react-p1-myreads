@@ -1,16 +1,13 @@
 import React from 'react';
-
+import { MemoryRouter } from 'react-router-dom';
 import SearchResult from '../SearchResult';
 import EmptySearchResult from '../EmptySearchResult';
 import Shelf from '../Shelf';
-import { MemoryRouter } from 'react-router-dom';
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { testBooks } from '../../common/testData';
 import { shelvesData } from '../../common/commonData';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
-
-describe('<SearchResult/>', () => {
+describe('SearchResult', () => {
 
   let resultBooks, emptyResult, shelves, query, clearResults, updateBookShelf, location;
 
@@ -22,7 +19,6 @@ describe('<SearchResult/>', () => {
     clearResults= jest.fn(),
     updateBookShelf= jest.fn(),
     location = {}
-
 	});
 
   it('should render an EmptyResult', () => {
@@ -35,10 +31,10 @@ describe('<SearchResult/>', () => {
         updateBookShelf={updateBookShelf}
         location={location}
       />
-    )
+    );
 
     expect(mounted.find(EmptySearchResult)).toHaveLength(1);
-  })
+  });
   
 
   it('should render a Shelf', () => {
@@ -53,10 +49,10 @@ describe('<SearchResult/>', () => {
         location={location}
       />
       </MemoryRouter>
-    )
+    );
 
     expect(mounted.find(Shelf)).toHaveLength(1);
-  })
+  });
 
   it('should render a Linar Progress Bar', () => {
     const mounted = mount(
@@ -71,16 +67,16 @@ describe('<SearchResult/>', () => {
         isSearching={true}
       />
       </MemoryRouter>
-    )
+    );
 
     expect(mounted.find(LinearProgress)).toHaveLength(1);
-  })
+  });
 
   it('should call clearResults', () => {
 
     let clearResults = jest.fn();
 
-    const mounted = mount(
+    mount(
       <MemoryRouter>
         <SearchResult
         resultBooks={emptyResult}
@@ -100,7 +96,7 @@ describe('<SearchResult/>', () => {
 
     let clearResults = jest.fn();
 
-    const mounted = mount(
+    mount(
       <MemoryRouter>
         <SearchResult
         resultBooks={emptyResult}
@@ -115,9 +111,9 @@ describe('<SearchResult/>', () => {
         }}
       />
       </MemoryRouter>
-    )
+    );
 
     expect(clearResults.mock.calls.length).toBe(0);
   });
  
-})
+});

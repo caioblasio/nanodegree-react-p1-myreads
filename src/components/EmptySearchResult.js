@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { searchTerms } from '../common/commonData';
 
 const styles = theme => ({
   message: {
@@ -22,6 +23,11 @@ const styles = theme => ({
   }
 });
 
+/**
+ * @description Empty Search Result Component. When search is empty or wrong
+ * @param {boolean} noBooksFound
+ * @param {Object} classes
+*/
 const EmptySearchResult = ({ noBooksFound, classes } ) => {
 
   return(
@@ -54,23 +60,18 @@ const EmptySearchResult = ({ noBooksFound, classes } ) => {
           variant="body2"
           color="textSecondary"
           >
-            'Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 
-            'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 
-            'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 
-            'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 
-            'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 
-            'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React', 'Redux', 'River', 
-            'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 
-            'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS'
+          {searchTerms.map((term, index) => (
+            index > 0 ? `, ${term}` : `${term}`
+          ))}
           </Typography>
         </Paper>
     </div>
   )
-}
+};
 
 EmptySearchResult.propTypes = {
   noBooksFound: PropTypes.bool,
   classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(EmptySearchResult);

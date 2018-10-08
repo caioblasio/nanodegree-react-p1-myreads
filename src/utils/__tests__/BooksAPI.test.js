@@ -1,7 +1,10 @@
 import { get, getAll, update, search } from '../BooksAPI';
 import { testBooks, jsonHeaders } from '../../common/testData';
 
+
+
 describe('BooksAPI', () => {
+
 	it('getAll: fetches all books', () => {
 		const mockBooksData = testBooks;
 		fetch.mockResponse(JSON.stringify(mockBooksData), { jsonHeaders });
@@ -33,6 +36,7 @@ describe('BooksAPI', () => {
 	});
 
 	it('search: searches for books', () => {
+		window.localStorage = {token : 'test'}
 		const query = 'search test';
 		const mockBooksData = testBooks;
 		fetch.mockResponse(JSON.stringify(mockBooksData), { jsonHeaders });

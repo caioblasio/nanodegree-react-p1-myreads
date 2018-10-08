@@ -43,7 +43,7 @@ const styles1 = theme => ({
   message: {
     display: 'flex',
     alignItems: 'center',
-  },
+  }
 });
 
 function MySnackbarContent({ classes, className, message, onClose, variant, ...other }) {
@@ -86,6 +86,13 @@ MySnackbarContent.propTypes = {
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
+/**
+ * @description Customized Snackbar component to show notifications about user interactions
+ * @param {boolean} open
+ * @param {function()} handleClose
+ * @param {string} message
+ * @param {string} variant
+*/
 class CustomizedSnackbars extends React.Component {
 
   render() {

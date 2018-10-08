@@ -1,45 +1,44 @@
 import React from 'react';
-
-import SearchBooks from '../SearchBooks';
 import { MemoryRouter } from 'react-router-dom';
-
+import SearchBooks from '../SearchBooks';
 import Input from '@material-ui/core/Input';
 import { createShallow } from '@material-ui/core/test-utils';
 
-describe('Header', () => {
+describe('SearchBooks', () => {
 
-  let onSearch, shallow;
+  let onSearch, mounted, wrapper, shallow;
 
 	beforeAll(() => {
  
-    onSearch = jest.fn()
-    shallow = createShallow({untilSelector: SearchBooks});
+    onSearch = jest.fn();
+    shallow = createShallow({untilSelector: SearchBooks}); //helper from Material-UI
 
-	});
-
-  it('should render a Search Icon', () => {
-    const mounted = mount(
+    mounted = mount(
       <MemoryRouter>
         <SearchBooks
           onSearch={onSearch}
         />
       </MemoryRouter>
-    )
+    );
 
-    expect(mounted.find('input')).toHaveLength(1);
+    wrapper = shallow(
+      <MemoryRouter>
+        <SearchBooks
+          onSearch={onSearch}
+        />
+      </MemoryRouter>
+    );
+
+	});
+
+  it('should render an Input', () => {
+    
+    expect(mounted.find(Input)).toHaveLength(1);
   });
 
   it('onSearch should be called with value typed in search input', () => {
 
     jest.useFakeTimers();
-
-    const mounted = mount(
-      <MemoryRouter>
-        <SearchBooks
-          onSearch={onSearch}
-        />
-      </MemoryRouter>
-    )
   
     mounted.find('input').simulate("change", { target: { value: "test" }});
 
@@ -51,5 +50,29 @@ describe('Header', () => {
     jest.useRealTimers();
 
   });
+
+  it('Should clean timeout for input debounce', () => {
+
+    const component = wrapper.dive();
+
+    jest.useFakeTimers();
+  
+    //trigger first input change
+    component.find(Input).simulate("change", { target: { value: "test" }});
+
+    jest.runOnlyPendingTimers();
+
+    //get first timeout
+    const timer1 = component.state().typingTimeout;
+    //trigger second input change
+    component.find(Input).simulate("change", { target: { value: "test" }});
+    //get second timeout
+    const timer2 = component.state().typingTimeout;
+    
+    expect(timer1).not.toEqual(timer2);
+
+    jest.useRealTimers();
+
+  });
  
-})
+});

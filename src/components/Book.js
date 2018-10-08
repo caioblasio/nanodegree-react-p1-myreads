@@ -76,6 +76,14 @@ const styles = theme => ({
   });
 
 
+/**
+ * @description Individual Book component
+ * @param {Object} book
+ * @param {Object[]} shelves
+ * @param {function(Object, string)} updateBookShelf
+ * @param {Object} location
+ * @param {Object} classes
+*/
 class Book extends Component {
 
   static propTypes = {
@@ -83,11 +91,11 @@ class Book extends Component {
     shelves: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
-  }
+  };
 
   state = {
     shelf: ''
-  }
+  };
 
   componentDidMount() {
     const { book } = this.props;
@@ -95,12 +103,16 @@ class Book extends Component {
     this.setState({ shelf });
   }
 
+  /**
+   * @description Handles a book's shelf change or removal
+   * @param {Object} event
+  */
   changeShelf = event => {
     const { book, updateBookShelf } = this.props;
     const shelf = event.target.value;
     this.setState({ shelf })
     updateBookShelf(book, shelf);
-  }
+  };
 
   render() {
 
@@ -198,7 +210,6 @@ class Book extends Component {
       </li>
     )
   }
-
 }
 
 export default withStyles(styles)(Book);

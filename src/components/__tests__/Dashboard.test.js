@@ -1,21 +1,18 @@
 import React from 'react';
 import Dashboard from '../Dashboard';
 import Shelf from '../Shelf';
-
-import { MemoryRouter } from 'react-router-dom';
 import { testBooks } from '../../common/testData';
 import { shelvesData } from '../../common/commonData';
 
 describe('Dashboard', () => {
-	let books, shelves, updateBookShelf, location, mounted, wrapper;
+  
+	let books, shelves, updateBookShelf, location, wrapper;
 
 	beforeAll(() => {
 		books = testBooks.books;
 		shelves = shelvesData;
     updateBookShelf = jest.fn();
-    location = {
-      pathname: '/'
-    }
+    location = {};
 
 		wrapper = shallow(
 			<Dashboard
@@ -26,19 +23,9 @@ describe('Dashboard', () => {
 			/>
 		);
 
-		mounted = mount(
-      <MemoryRouter>
-        <Dashboard
-          books={books}
-          shelves={shelves}
-          updateBookShelf={updateBookShelf}
-          location={location}
-        />
-      </MemoryRouter>
-		);
   });
   
-  it('renders 3 shelves', () => {
+  it('Renders 3 shelves', () => {
 		expect(wrapper.find(Shelf).length).toBe(3);
 	});
 

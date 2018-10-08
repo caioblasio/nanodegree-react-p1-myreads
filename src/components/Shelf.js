@@ -34,7 +34,17 @@ const styles = theme => ({
   }
 });
 
-const Shelf = ({ shelfTitle, shelfBooks, shelves, updateBookShelf, classes, location }) => {
+/**
+ * @description Shelf component that holds books
+ * @param {string} shelfTitle
+ * @param {Object[]} shelfBooks
+ * @param {Object} shelves
+ * @param {function(Object, string)} updateBookShelf
+ * @param {string} isLoading
+ * @param {Object} location
+ * @param {Object} classes
+*/
+const Shelf = ({ shelfTitle, shelfBooks, shelves, updateBookShelf, isLoading, classes, location }) => {
   
   return (
     <div>
@@ -57,7 +67,7 @@ const Shelf = ({ shelfTitle, shelfBooks, shelves, updateBookShelf, classes, loca
             ))}
           </ul>
         }
-        {shelfBooks.length === 0 &&
+        {isLoading &&
           <div style={{textAlign: 'center'}}>
             <CircularProgress className={classes.progress} />
           </div>
@@ -65,15 +75,16 @@ const Shelf = ({ shelfTitle, shelfBooks, shelves, updateBookShelf, classes, loca
       </Paper>
     </div>
   )
-}
+};
 
 Shelf.propTypes = {
   shelfTitle: PropTypes.string.isRequired,
   shelfBooks: PropTypes.array.isRequired,
   shelves: PropTypes.array.isRequired,
   updateBookShelf: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   location: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(Shelf);

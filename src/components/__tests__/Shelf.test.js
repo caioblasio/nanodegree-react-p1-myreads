@@ -9,7 +9,7 @@ import { createShallow } from '@material-ui/core/test-utils';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-describe('Book', () => {
+describe('Shelf', () => {
 
   let shelfTitle, shelfBooks, shelves, updateBookShelf, location, shallow;
 
@@ -30,6 +30,7 @@ describe('Book', () => {
           shelfTitle={shelfTitle}
           shelfBooks={shelfBooks}
           shelves={shelves}
+          isLoading={false}
           updateBookShelf={updateBookShelf}
           location={location}
         />
@@ -46,6 +47,7 @@ describe('Book', () => {
         <Shelf
           shelfTitle={shelfTitle}
           shelfBooks={[]}
+          isLoading={true}
           shelves={shelves}
           updateBookShelf={updateBookShelf}
           location={location}

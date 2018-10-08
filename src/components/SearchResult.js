@@ -4,17 +4,31 @@ import Shelf from './Shelf';
 import EmptySearchResult from './EmptySearchResult';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+
+/**
+ * @description Search Result Component that holds shelf of result books
+ * @param {Object[]| Object} resultBooks
+ * @param {string} query
+ * @param {function(string)} clearResults
+ * @param {Object[]} shelves
+ * @param {function(Object, string)} updateBookShelf
+ * @param {boolean} isSearching
+ * @param {Object} location
+*/
 class SearchResult extends Component {
 
   static propTypes = {
-    resultBooks: PropTypes.array.isRequired,
+    resultBooks: PropTypes.oneOfType([
+      PropTypes.array.isRequired,
+      PropTypes.object.isRequired
+    ]),
     query: PropTypes.string,
     clearResults: PropTypes.func.isRequired,
     shelves: PropTypes.array.isRequired,
     updateBookShelf: PropTypes.func.isRequired,
     isSearching: PropTypes.bool,
     location: PropTypes.object.isRequired,
-  }
+  };
   
   /* 
     Clear searched books and searched query on parent element if user has not come from a book detail page

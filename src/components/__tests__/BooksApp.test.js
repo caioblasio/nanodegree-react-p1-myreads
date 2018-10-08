@@ -15,6 +15,7 @@ describe('BooksApp', () => {
   let shallow, mountedRoot, mountedSearch, wrapper;
   
 	beforeAll(() => {
+    
     fetch.resetMocks();
     fetch.mockResponse(JSON.stringify(testBooks), { jsonHeaders });
     shallow = createShallow({untilSelector: BooksApp}); //helper from Material-UI
@@ -22,18 +23,20 @@ describe('BooksApp', () => {
     mountedRoot = mount(
       <MemoryRouter>
         <BooksApp />
-      </MemoryRouter>);
+      </MemoryRouter>
+    );
 
     mountedSearch = mount(
       <MemoryRouter initialEntries={[ '/search' ]}>
         <BooksApp />
-      </MemoryRouter>);
+      </MemoryRouter>
+    );
     
     wrapper = shallow(
       <MemoryRouter>
         <BooksApp/>
       </MemoryRouter>
-      );
+    );
 
 	});
 
@@ -94,7 +97,7 @@ describe('BooksApp', () => {
     
   });
 
-  it('Searches for books', () => {
+  it('Searches for books', (done) => {
 
     const mockBookData = testBooks;
     const testQuery = 'test query'
@@ -104,28 +107,51 @@ describe('BooksApp', () => {
 
     component.instance().searchBooks(testQuery)
 
-    //wait for state to be set
+    //wait for componentDidMount run and shelfBooks piece of state to be set
     setImmediate(() => {
-      expect(component.state().searchBooks).toEqual(testBooks.books)
-      expect(component.state().searchQuery).toEqual(testQuery)
+      expect(component.state().searchBooks).toEqual(testBooks.books);
+      expect(component.state().searchQuery).toEqual(testQuery);
+      done();
     });
     
   });
 
-  xit('Searches for books wrong', (done) => {
+  it('Searches for books but book is not already in a shelf', (done) => {
+
+    const mockBookData = {books: [{id: 'testID'}]};
+    const testQuery = 'test query'
+    const component = wrapper.dive();
+
+    //wait for componentDidMount run and shelfBooks piece of state to be set
+    setImmediate(() => {
+      fetch.mockResponseOnce(JSON.stringify(mockBookData), {jsonHeaders});
+      component.instance().searchBooks(testQuery);
+      setImmediate(() => {
+        //searchBooks should be an array with the book result and a shelf property set to none, as it has no shelf previously assigned
+        expect(component.state().searchBooks).toEqual(mockBookData.books.map(book => ({...book, shelf: 'none'})));
+        expect(component.state().searchQuery).toEqual(testQuery);
+        done();
+      })
+     
+    });
+    
+  });
+
+  it('Searches for books with a wrong query', (done) => {
 
     const mockBookData = {books: {error: 'wrong query'}};
     const testQuery = 'wrong query'
-		fetch.mockResponse(JSON.stringify(mockBookData), {jsonHeaders});
-
     const component = wrapper.dive();
-
-    component.instance().searchBooks(testQuery)
-
-    //wait for state to be set
+  
+    //One setImmeadiate to wait for componentDidMount and other to wait for searchBooks
     setImmediate(() => {
-      console.log(component.state().searchBooks)
-      done();
+		  fetch.mockResponseOnce(JSON.stringify(mockBookData), {jsonHeaders});
+      component.instance().searchBooks(testQuery);
+      setImmediate(() => {
+        expect(component.state().searchBooks).toEqual(mockBookData.books)
+        done();
+      })
+    
     });
     
   });
@@ -170,7 +196,7 @@ describe('BooksApp', () => {
 
     const book = {
 			title: '4',
-			id: 'IOejDAAAQBAJ'
+			id: 'testID'
     }
     
     // One setImmeadiate to wait for componentDidMount and other to wait for updateBook
@@ -185,6 +211,41 @@ describe('BooksApp', () => {
     });
 
   });
-  
 
-})
+
+  it('Remove book that is in a shelf, from shelf', (done) => {
+
+    const component = wrapper.dive();
+
+    const book = {...testBooks.books[0]}
+    
+    //One setImmeadiate to wait for componentDidMount and other to wait for updateBook
+    setImmediate(() => {
+      expect(component.state().shelfBooks[0].shelf).toEqual('wantToRead');
+      component.instance().updateBook(book, 'none') 
+      setImmediate(() => {
+        expect(component.state().shelfBooks).not.toEqual(expect.arrayContaining([book]));
+        done();
+      });
+    });
+
+  });
+
+  it('Remove book that is not in a shelf, from shelf', (done) => {
+
+    const component = wrapper.dive();
+
+    const book = {id: 'testID', shelf: 'none'}
+
+    //One setImmeadiate to wait for componentDidMount and other to wait for updateBook
+    setImmediate(() => {
+      component.instance().updateBook(book, 'none') 
+      setImmediate(() => {
+        expect(component.state().shelfBooks).not.toEqual(expect.arrayContaining([book]));
+        done();
+      });
+    });
+
+  });
+
+});

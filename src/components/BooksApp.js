@@ -12,12 +12,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
+import { Typography } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
     primary: grey,
     secondary: blue
-  },
+  }
 });
 
 const styles = {
@@ -28,9 +29,14 @@ const styles = {
       paddingRight: theme.spacing.unit * 2,
       paddingLeft: theme.spacing.unit * 2
     }
+  },
+  footer: {
+    marginBottom: theme.spacing.unit * 2,
+    textAlign: 'center',
   }
-}
+};
 
+/** Main class for the MyReads App */
 class BooksApp extends Component {
 
   state = {
@@ -38,27 +44,38 @@ class BooksApp extends Component {
     searchBooks: [],
     searchQuery: '',
     isSearching: false,
+    isLoading: false,
     snackbarInfo: {
       show: false,
       shelf: '',
       variant: '',
       action: ''
     }
-  }
+  };
 
   componentDidMount() {
+    this.setState({isLoading: true});
     BooksAPI.getAll()
       .then(shelfBooks => {
         this.setState({
-          shelfBooks
-        })
-      })
+          shelfBooks,
+          isLoading: false
+        });
+      });
   }
 
+  /**
+  * @description Checks if should empty query and searchBooks or fetch new books based on query input by user
+  * @param {string} query
+  */
   searchBooks = (query) => {
     !query ? this.setState({searchBooks: [], searchQuery: query}) : this.fetchBooks(query)
-  }
+  };
 
+  /**
+  * @description Fetches books and assign shelf property so it can be used in search results page
+  * @param {string} serachQuery
+  */
   fetchBooks = (searchQuery) => {
     this.setState({ isSearching: true });
     BooksAPI.search(searchQuery)
@@ -85,37 +102,51 @@ class BooksApp extends Component {
           searchQuery,
           isSearching: false
         });
-      })
-  }
+      });
+  };
 
-
+  /**
+  * @description Updates a book's shelf or remove book from shelf if shelf equals none
+  * @param {object} book
+  * @param {string} shelf
+  */
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf)
       .then(() => {
         book.shelf = shelf;
         this.setState((currentState) => {
+          
           //check if updated book is already in a shelf
           const shelfBook = currentState.shelfBooks.find(shelfBook => (shelfBook.id === book.id));
           //set snackbarInfo according to operation perfomed, shelf change or shelf removal
-          const snackbarInfo = {show: true, shelf, variant: shelf !== 'none' ? 'success' : 'warning', action: shelf !== 'none' ? 'moveToShelf' : 'removeFromShelf'}
-          if(shelfBook){
+          const snackbarInfo = {show: true, shelf, action: shelf !== 'none' ? 'moveToShelf' : 'removeFromShelf'}
+          
+          if(shelfBook && shelf === 'none'){ 
+            //remove a book from shelf
+            return {shelfBooks: currentState.shelfBooks.filter(book => book.id !== shelfBook.id), snackbarInfo: { ...snackbarInfo, variant: 'warning'}}
+            
+          } else if(!shelfBook && shelf === 'none') {
+            //remove a book that is not in a shelf
+            return {shelfBooks: currentState.shelfBooks, snackbarInfo: { ...snackbarInfo, variant: 'error'}}
+
+          } else if(shelfBook){
             //if book is already in a shelf, change its shelf
             shelfBook.shelf = book.shelf;
-            return {shelfBooks: currentState.shelfBooks, snackbarInfo: { ...snackbarInfo}}
+            return {shelfBooks: currentState.shelfBooks, snackbarInfo: { ...snackbarInfo, variant: 'success'}}
+
           } else {
             //if book was not in a shelf, put it in the shelf
-            return {shelfBooks: currentState.shelfBooks.concat([book]), snackbarInfo: { ...snackbarInfo}}
+            return {shelfBooks: currentState.shelfBooks.concat([book]), snackbarInfo: { ...snackbarInfo, variant: 'success'}}
           }
         
         })
-      })
-  }
+      });
+  };
 
-  handleSnackBarClose = (reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
+  /**
+  * @description Handles close of a snackbar
+  */
+  handleSnackBarClose = () => {
     this.setState((currentState) => ({
       snackbarInfo: {...currentState.snackbarInfo, show: false}
     }));
@@ -134,6 +165,7 @@ class BooksApp extends Component {
                 books={this.state.shelfBooks}
                 shelves={shelvesData}
                 updateBookShelf={this.updateBook}
+                isLoading={this.state.isLoading}
                 {...props}
               />
             )} />
@@ -151,6 +183,14 @@ class BooksApp extends Component {
             <Route path="/book/:id" render={(props) => (
               <BookDetail {...props} />
             )} />
+            <div className={classes.footer}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+            >
+              Udacity MyReads Project by @caioblasio - <a href="https://github.com/caioblasio/nanodegree-react-p1-myreads">github</a>
+            </Typography>
+            </div>
           </div>
           {this.state.snackbarInfo.show && <CustomizedSnackbars 
             open={this.state.snackbarInfo.show} 
@@ -159,7 +199,9 @@ class BooksApp extends Component {
             message={`
               Book
               ${this.state.snackbarInfo.action === 'moveToShelf' ? 
-              `moved to shelf ${shelvesData.find(shelf => (shelf.alias === this.state.snackbarInfo.shelf)).title}` : 'removed from shelf'}`
+              `moved to shelf ${shelvesData.find(shelf => (shelf.alias === this.state.snackbarInfo.shelf)).title}` 
+              : (this.state.snackbarInfo.action === 'removeFromShelf' && this.state.snackbarInfo.variant === 'warning') ? 'removed from shelf' 
+              : 'is not in a shelf'}`
             }
           />}
         </React.Fragment>

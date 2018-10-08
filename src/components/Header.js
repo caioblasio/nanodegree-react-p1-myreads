@@ -30,6 +30,11 @@ const styles = theme => {
   }
 };
 
+/**
+ * @description Header component
+ * @param {function(string)} onSearch
+ * @param {object} classes
+ */
 const Header = ({ onSearch, classes }) => {
 
   return(
@@ -55,11 +60,11 @@ const Header = ({ onSearch, classes }) => {
       </AppBar>
     </div>
   )
-}
+};
 
 Header.propTypes = {
   onSearch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(Header);

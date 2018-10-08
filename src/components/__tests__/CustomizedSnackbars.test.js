@@ -1,8 +1,6 @@
 import React from 'react';
-
 import CustomizedSnackbars from '../CustomizedSnackbars';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import IconButton from '@material-ui/core/IconButton';
 
 describe('Customized Snackbars', () => {
 
@@ -15,7 +13,6 @@ describe('Customized Snackbars', () => {
     variant = 'success'
   });
 
-
   it('Should render a success Snackbar with a Sample Message', () => {
 
     const mounted = mount(
@@ -25,11 +22,11 @@ describe('Customized Snackbars', () => {
         variant={variant}
         message={message}
       />
-    )
+    );
 
     expect(mounted.find('#client-snackbar').text()).toEqual('Sample Message');
     expect(mounted.find(CheckCircleIcon)).toHaveLength(1);
     
   });
  
-})
+});

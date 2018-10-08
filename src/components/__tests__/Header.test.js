@@ -1,8 +1,6 @@
 import React from 'react';
-
-import Header from '../Header';
 import { MemoryRouter } from 'react-router-dom';
-
+import Header from '../Header';
 import SearchIcon from '@material-ui/icons/Search';
 import SearchBooks from '../SearchBooks';
 
@@ -11,10 +9,8 @@ describe('Header', () => {
   let onSearch;
 
 	beforeAll(() => {
- 
     onSearch = jest.fn()
-
-	});
+	})
 
   it('should render a Search Icon', () => {
     const mounted = mount(

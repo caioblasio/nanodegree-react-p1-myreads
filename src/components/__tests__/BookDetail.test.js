@@ -1,7 +1,6 @@
 import React from 'react';
-
-import BookDetail from '../BookDetail';
 import { MemoryRouter } from 'react-router-dom';
+import BookDetail from '../BookDetail';
 import { testBooks, jsonHeaders } from '../../common/testData';
 import { createShallow } from '@material-ui/core/test-utils';
 
@@ -11,7 +10,6 @@ describe('Book Detail', () => {
 
   beforeAll(() => {
     shallow = createShallow({untilSelector: BookDetail});
-
   });
 
   it('Should get book data from location object', () => {
@@ -20,7 +18,7 @@ describe('Book Detail', () => {
       state: {
         book: testBooks.books[0]
       }
-    }
+    };
 
     const wrapper = shallow(
     <MemoryRouter initialEntries={[ '/book/nggnmAEACAAJ' ]}>
@@ -43,9 +41,9 @@ describe('Book Detail', () => {
       params: {
         id: 'sJf1vQAACAAJ'
       }
-    }
+    };
 
-    let location = {}
+    let location = {};
 
     const wrapper = shallow(
     <MemoryRouter initialEntries={[ '/book/sJf1vQAACAAJ' ]}>
@@ -72,7 +70,7 @@ describe('Book Detail', () => {
       state: {
         fromDashboard: true
       }
-    }
+    };
 
     const mounted = mount(
       <MemoryRouter initialEntries={[ '/book/sJf1vQAACAAJ' ]}>
@@ -92,7 +90,7 @@ describe('Book Detail', () => {
       state: {
         fromDashboard: false
       }
-    }
+    };
 
     const mounted = mount(
       <MemoryRouter initialEntries={[ '/book/sJf1vQAACAAJ' ]}>
@@ -106,5 +104,4 @@ describe('Book Detail', () => {
 
   });
 
- 
-})
+});

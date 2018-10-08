@@ -73,6 +73,12 @@ const styles = theme => ({
   }
 });
 
+/**
+ * @description Get a bigger image by changing parameter in querystring
+ * @param {string} uri
+ * @param {string} key
+ * @param {string} value
+*/
 const helperGetBigImage = (uri, key, value) => {
   var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
   if (uri.match(re)) {
@@ -81,18 +87,25 @@ const helperGetBigImage = (uri, key, value) => {
   else {
     return uri
   }
-}
+};
 
+/**
+ * @description Book Detail component that shows book's details
+ * @param {Object} location
+ * @param {Object} match
+ * @param {Object} classes
+*/
 class BookDetail extends Component {
 
   static propType = {
     location: PropType.object,
+    match: PropType.object,
     classes: PropType.object.isRequired
-  }
+  };
 
   state = {
     book: {}
-  }
+  };
   
   componentDidMount(){
 

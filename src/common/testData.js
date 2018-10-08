@@ -6,7 +6,7 @@ const testBooks = {
 			subtitle: 'A Subtitle',
 			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 			authors: ['Author One', 'Author Two'],
-			imageLinks: { thumbnail: 'http://cover.gif' },
+			imageLinks: { thumbnail: 'http://book1.jpg?zoom=1' },
 			id: 'nggnmAEACAAJ',
 			shelf: 'wantToRead'
 		},
@@ -16,18 +16,21 @@ const testBooks = {
 			description:
 				'Suspendisse facilisis varius sem, ut auctor sem pulvinar sed.',
 			categories: ['TEST', 'TEST2'],
+			pageCount: 100,
+			publishedDate: '1980',
+			averageRating: 3,
+			previewLink: 'http://test.com',
 			authors: ['Guy Three', 'Guy Four'],
-			imageLinks: { thumbnail: 'http://pic2.jpg' },
+			imageLinks: { thumbnail: 'http://book2.jpg' },
 			id: 'sJf1vQAACAAJ',
 			shelf: 'read'
 		},
 		{
 			title: '3: The Threequel',
 			subtitle: 'The 3rd and Final Subtitle',
-			pageCount: 100,
 			averageRating: 3,
 			authors: ['Writer Five', 'Writer Six'],
-			imageLinks: { thumbnail: 'http://bookCover.png' },
+			imageLinks: { thumbnail: 'http://book3.png' },
 			id: 'bKs2xWEECBAL',
 			shelf: 'read'
 		}
