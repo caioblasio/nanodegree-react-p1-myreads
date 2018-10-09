@@ -89,6 +89,7 @@ class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     shelves: PropTypes.array.isRequired,
+    updateBookShelf: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   };

@@ -4,7 +4,6 @@ import Shelf from './Shelf';
 import EmptySearchResult from './EmptySearchResult';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-
 /**
  * @description Search Result Component that holds shelf of result books
  * @param {Object[]| Object} resultBooks

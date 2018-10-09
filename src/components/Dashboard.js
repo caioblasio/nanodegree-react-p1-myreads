@@ -25,7 +25,15 @@ const Dashboard = ({ books, shelves, updateBookShelf, isLoading, location }) => 
   return (
     <div>
       {shelves.map(shelf => (
-        <Shelf key={shelf.alias} isLoading={isLoading} shelfTitle={shelf.title} shelfBooks={getBooksShelves(shelf.alias)} shelves={shelves} updateBookShelf={updateBookShelf} location={location} />
+        <Shelf 
+          key={shelf.alias}
+          isLoading={isLoading}
+          shelfTitle={shelf.title}
+          shelfBooks={getBooksShelves(shelf.alias)}
+          shelves={shelves}
+          updateBookShelf={updateBookShelf}
+          location={location} 
+        />
       ))}
     </div>
   )

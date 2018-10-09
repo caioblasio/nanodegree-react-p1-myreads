@@ -98,8 +98,8 @@ const helperGetBigImage = (uri, key, value) => {
 class BookDetail extends Component {
 
   static propType = {
-    location: PropType.object,
-    match: PropType.object,
+    location: PropType.object.isRequired,
+    match: PropType.object.isRequired,
     classes: PropType.object.isRequired
   };
 
@@ -193,11 +193,12 @@ class BookDetail extends Component {
                       rating unavailable
                     </Typography>}
                   </div>
-                  <a target="_blank" className={classes.link} href={this.state.book.previewLink ? this.state.book.previewLink : '#'} >
+                  {this.state.book.previewLink && 
+                    <a target="_blank" className={classes.link} href={this.state.book.previewLink} >
                     <Button variant="outlined" color="secondary">
                       Preview
                     </Button>
-                  </a>
+                  </a>}
                 </div>  
                 <Divider className={classes.divider} />
                 <Typography

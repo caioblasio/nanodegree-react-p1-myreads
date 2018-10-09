@@ -33,7 +33,7 @@ const styles = theme => {
 /**
  * @description Header component
  * @param {function(string)} onSearch
- * @param {object} classes
+ * @param {Object} classes
  */
 const Header = ({ onSearch, classes }) => {
 

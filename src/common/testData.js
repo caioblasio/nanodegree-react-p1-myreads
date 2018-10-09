@@ -13,8 +13,7 @@ const testBooks = {
 		{
 			title: 'Book 2: Electric Boogaloo',
 			subtitle: 'Another Subtitle #2',
-			description:
-				'Suspendisse facilisis varius sem, ut auctor sem pulvinar sed.',
+			description: 'Suspendisse facilisis varius sem, ut auctor sem pulvinar sed.',
 			categories: ['TEST', 'TEST2'],
 			pageCount: 100,
 			publishedDate: '1980',

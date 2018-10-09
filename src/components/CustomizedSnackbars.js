@@ -95,6 +95,13 @@ const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 */
 class CustomizedSnackbars extends React.Component {
 
+  static propType = {
+    open: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func,
+    message: PropTypes.string,
+    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired
+  }
+
   render() {
     const { open, handleClose, message, variant } = this.props;
 

@@ -7,7 +7,6 @@ import BookDetail from './BookDetail';
 import CustomizedSnackbars from './CustomizedSnackbars';
 import * as BooksAPI from '../utils/BooksAPI';
 import { shelvesData } from '../common/commonData';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import blue from '@material-ui/core/colors/blue';
@@ -74,7 +73,7 @@ class BooksApp extends Component {
 
   /**
   * @description Fetches books and assign shelf property so it can be used in search results page
-  * @param {string} serachQuery
+  * @param {string} searchQuery
   */
   fetchBooks = (searchQuery) => {
     this.setState({ isSearching: true });
@@ -107,7 +106,7 @@ class BooksApp extends Component {
 
   /**
   * @description Updates a book's shelf or remove book from shelf if shelf equals none
-  * @param {object} book
+  * @param {Object} book
   * @param {string} shelf
   */
   updateBook = (book, shelf) => {

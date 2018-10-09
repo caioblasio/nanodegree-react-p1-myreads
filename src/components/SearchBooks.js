@@ -97,7 +97,7 @@ class SearchBooks extends Component {
     return (
       <div className={classes.search}>
         <Input
-          placeholder="Search…"
+          placeholder="Search Books…"
           disableUnderline
           value={this.state.query}
           onChange={this.handleChange}
