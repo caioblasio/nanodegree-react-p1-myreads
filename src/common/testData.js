@@ -2,8 +2,8 @@
 const testBooks = {
 	books: [
 		{
-			title: 'A Book Titled 1',
-			subtitle: 'A Subtitle',
+			title: 'The First Book',
+			subtitle: 'A Subtitle for the first book',
 			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 			authors: ['Author One', 'Author Two'],
 			imageLinks: { thumbnail: 'http://book1.jpg?zoom=1' },
@@ -11,24 +11,24 @@ const testBooks = {
 			shelf: 'wantToRead'
 		},
 		{
-			title: 'Book 2: Electric Boogaloo',
-			subtitle: 'Another Subtitle #2',
-			description: 'Suspendisse facilisis varius sem, ut auctor sem pulvinar sed.',
+			title: 'The Second Book',
+			subtitle: 'Another Subtitle',
+			description: 'Sample Description',
 			categories: ['TEST', 'TEST2'],
 			pageCount: 100,
 			publishedDate: '1980',
 			averageRating: 3,
 			previewLink: 'http://test.com',
-			authors: ['Guy Three', 'Guy Four'],
+			authors: ['Author', 'Author'],
 			imageLinks: { thumbnail: 'http://book2.jpg' },
 			id: 'sJf1vQAACAAJ',
 			shelf: 'read'
 		},
 		{
-			title: '3: The Threequel',
-			subtitle: 'The 3rd and Final Subtitle',
+			title: 'The Third Book',
+			subtitle: 'The Subtitle',
 			averageRating: 3,
-			authors: ['Writer Five', 'Writer Six'],
+			authors: ['Another Author', 'Author X'],
 			imageLinks: { thumbnail: 'http://book3.png' },
 			id: 'bKs2xWEECBAL',
 			shelf: 'read'
